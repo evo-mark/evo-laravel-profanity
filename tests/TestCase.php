@@ -2,8 +2,8 @@
 
 namespace EvoMark\EvoLaravelProfanity\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use EvoMark\EvoLaravelProfanity\ServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

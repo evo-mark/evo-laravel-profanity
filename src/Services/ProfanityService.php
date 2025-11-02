@@ -2,8 +2,9 @@
 
 namespace EvoMark\EvoLaravelProfanity\Services;
 
-use ReflectionClass;
 use Illuminate\Support\Facades\App;
+use ReflectionClass;
+
 use function Illuminate\Filesystem\join_paths;
 
 class ProfanityService
@@ -13,7 +14,7 @@ class ProfanityService
     public function __construct()
     {
         $configPath = $this->resolveConfig();
-        $this->words = require($configPath);
+        $this->words = require $configPath;
     }
 
     public function getWords(): array
@@ -26,6 +27,7 @@ class ProfanityService
         $locale = App::currentLocale();
         $ref = new ReflectionClass(\Pest\Profanity\ProfanityAnalyser::class);
         $packageBase = dirname($ref->getFileName());
-        return join_paths($packageBase, 'Config', 'profanities', $locale . ".php");
+
+        return join_paths($packageBase, 'Config', 'profanities', $locale.'.php');
     }
 }

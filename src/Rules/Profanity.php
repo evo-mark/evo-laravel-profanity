@@ -4,8 +4,8 @@ namespace EvoMark\EvoLaravelProfanity\Rules;
 
 use Closure;
 use EvoMark\EvoLaravelProfanity\Services\ProfanityService;
-use Illuminate\Support\Facades\App;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\App;
 
 class Profanity implements ValidationRule
 {
@@ -18,7 +18,7 @@ class Profanity implements ValidationRule
         $words = array_diff($words, config('profanity.excludingWords')[$locale] ?? []);
 
         foreach ($words as $word) {
-            if (preg_match('/(?<!\p{L})' . preg_quote($word, '/') . '(?!\p{L})/iu', $value) === 1) {
+            if (preg_match('/(?<!\p{L})'.preg_quote($word, '/').'(?!\p{L})/iu', $value) === 1) {
                 $fail('validation.profanity');
             }
         }

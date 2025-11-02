@@ -2,12 +2,11 @@
 
 namespace EvoMark\EvoLaravelProfanity;
 
-use Spatie\LaravelPackageTools\Package;
-use Illuminate\Support\Facades\Validator;
 use EvoMark\EvoLaravelProfanity\Rules\Profanity;
-use EvoMark\EvoLaravelProfanity\Services\ProfanityService;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Translation\PotentiallyTranslatedString;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ServiceProvider extends PackageServiceProvider
 {
@@ -24,10 +23,12 @@ class ServiceProvider extends PackageServiceProvider
             $rule = new Profanity;
             $fail = function ($message) use ($attribute, $validator) {
                 $message = new PotentiallyTranslatedString($message, $validator->getTranslator());
-                return $validator->messages()->add($attribute, (string)$message->translate());
+
+                return $validator->messages()->add($attribute, (string) $message->translate());
             };
             $rule->validate($attribute, $value, $fail);
-            return !$validator->messages()->has($attribute);
+
+            return ! $validator->messages()->has($attribute);
         });
     }
 }

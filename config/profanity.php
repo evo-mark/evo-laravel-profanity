@@ -2,9 +2,9 @@
 
 return [
     'includingWords' => [
-        'en' => []
+        'en' => [],
     ],
     'excludingWords' => [
-        'en' => []
-    ]
+        'en' => [],
+    ],
 ];
