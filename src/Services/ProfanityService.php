@@ -24,10 +24,16 @@ class ProfanityService
 
     public function resolveConfig(): string
     {
-        $locale = App::currentLocale();
+        $locale = $this->getLocale();
         $ref = new ReflectionClass(\Pest\Profanity\ProfanityAnalyser::class);
         $packageBase = dirname($ref->getFileName());
 
-        return join_paths($packageBase, 'Config', 'profanities', $locale.'.php');
+        return join_paths($packageBase, 'Config', 'profanities', $locale . '.php');
+    }
+
+    public function getLocale(): string
+    {
+        $configLocale = config('profanity.locale');
+        return $configLocale ?? App::currentLocale();
     }
 }

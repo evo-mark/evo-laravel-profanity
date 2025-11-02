@@ -33,7 +33,7 @@ php artisan vendor:publish --tag="evo-laravel-profanity-config"
 
 ## Usage
 
-The validator uses your current locale for determining which profanity words to check against. See the [Pest repository](https://github.com/pestphp/pest-plugin-profanity/tree/HEAD/src/Config/profanities) for available locales.
+The validator uses your current locale for determining which profanity words to check against. Alternatively, you can set this manually in your config file. See the [Pest repository](https://github.com/pestphp/pest-plugin-profanity/tree/HEAD/src/Config/profanities) for available locales.
 
 To use the validator, simply include the `profanity` rule in your ruleset.
 
