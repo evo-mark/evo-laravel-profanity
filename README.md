@@ -31,6 +31,20 @@ You can publish the config file with:
 php artisan vendor:publish --tag="evo-laravel-profanity-config"
 ```
 
+Finally, to download/update the profanity definitions, add this to the `composer.json` file at the root of your project:
+
+```json
+"scripts": {
+    "post-autoload-dump": [
+        "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+        "@php artisan profanity:update"
+    ],
+}
+```
+
+> [!CAUTION]
+> Failure to add the above will result in validation not running with the rule.
+
 ## Usage
 
 The validator uses your current locale for determining which profanity words to check against. Alternatively, you can set this manually in your config file. See the [Pest repository](https://github.com/pestphp/pest-plugin-profanity/tree/HEAD/src/Config/profanities) for available locales.

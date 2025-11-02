@@ -3,23 +3,20 @@
 namespace EvoMark\EvoLaravelProfanity\Rules;
 
 use Closure;
-use EvoMark\EvoLaravelProfanity\Services\ProfanityService;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Validation\ValidationRule;
+use EvoMark\EvoLaravelProfanity\Services\ProfanityService;
 
 class Profanity implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $service = app(ProfanityService::class);
-        $locale = $service->getLocale();
-        $words = $service->getWords();
-        $words = array_merge($words, config('profanity.includingWords')[$locale] ?? []);
-        $words = array_diff($words, config('profanity.excludingWords')[$locale] ?? []);
+        $matcher = $service->getMatcher();
+        $matches = $matcher->searchIn(Str::lower($value));
 
-        foreach ($words as $word) {
-            if (preg_match('/(?<!\p{L})' . preg_quote($word, '/') . '(?!\p{L})/iu', $value) === 1) {
-                $fail('validation.profanity');
-            }
+        if (count($matches) > 0) {
+            $fail('validation.profanity');
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace EvoMark\EvoLaravelProfanity;
 
+use EvoMark\EvoLaravelProfanity\Commands\UpdateDefinitionsCommand;
 use EvoMark\EvoLaravelProfanity\Rules\Profanity;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Translation\PotentiallyTranslatedString;
@@ -14,7 +15,8 @@ class ServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('evo-laravel-profanity')
-            ->hasConfigFile('profanity');
+            ->hasConfigFile('profanity')
+            ->hasCommand(UpdateDefinitionsCommand::class);
     }
 
     public function packageBooted()
