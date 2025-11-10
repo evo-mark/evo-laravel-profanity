@@ -1,7 +1,7 @@
 <?php
 
-use EvoMark\EvoLaravelProfanity\Rules\Profanity;
 use Illuminate\Support\Facades\Validator;
+use EvoMark\EvoLaravelProfanity\Rules\Profanity;
 
 it('allows terms without profanity', function () {
     $rule = new Profanity;

@@ -2,13 +2,11 @@
 
 namespace EvoMark\EvoLaravelProfanity\Services;
 
-use ReflectionClass;
 use Carbon\CarbonInterval;
 use Illuminate\Support\Str;
 use AhoCorasick\MultiStringMatcher;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
-
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -20,6 +18,7 @@ class ProfanityService
      * An array of words to check input against
      */
     protected array $words;
+
     /**
      * Matcher instance can be reused across multiple input validations
      */
@@ -33,8 +32,10 @@ class ProfanityService
     private function loadWordsFromSource(): array
     {
         $locale = $this->getLocale();
-        return Cache::remember('profanity_' . $locale, CarbonInterval::days(config('profanity.cacheDays')), function () {
+
+        return Cache::remember('profanity_'.$locale, CarbonInterval::days(config('profanity.cacheDays')), function () {
             $configPath = $this->resolveWordsFile();
+
             return include $configPath ?? [];
         });
     }
@@ -46,7 +47,7 @@ class ProfanityService
 
     public function getMatcher(): MultiStringMatcher
     {
-        if (!empty($this->matcher)) {
+        if (! empty($this->matcher)) {
             return $this->matcher;
         }
 
@@ -56,6 +57,7 @@ class ProfanityService
         $words = array_diff($words, config('profanity.excludingWords')[$locale] ?? []);
 
         $this->matcher = new MultiStringMatcher($words);
+
         return $this->matcher;
     }
 
@@ -63,10 +65,10 @@ class ProfanityService
     {
         $locale = $this->getLocale();
         $files = File::glob(storage_path('app/profanity/*.php'));
-        $wordsFile = collect($files)->firstWhere(fn($file) => Str::endsWith($file, $locale . ".php"));
+        $wordsFile = collect($files)->firstWhere(fn ($file) => Str::endsWith($file, $locale.'.php'));
 
         if (File::exists($wordsFile) === false && app()->isProduction() === false) {
-            throw new \Exception("No words file found for locale '" . $locale . "'. Make sure you've added the `profanity:update` command to your composer.json 'post-autoload-dump' script. See README for more details");
+            throw new \Exception("No words file found for locale '".$locale."'. Make sure you've added the `profanity:update` command to your composer.json 'post-autoload-dump' script. See README for more details");
         }
 
         return $wordsFile;
@@ -78,6 +80,7 @@ class ProfanityService
     public function getLocale(): string
     {
         $configLocale = config('profanity.locale');
-        return str($configLocale ?? App::currentLocale())->lower()->replace("-", "_");
+
+        return str($configLocale ?? App::currentLocale())->lower()->replace('-', '_');
     }
 }

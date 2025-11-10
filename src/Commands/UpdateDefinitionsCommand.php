@@ -5,8 +5,8 @@ namespace EvoMark\EvoLaravelProfanity\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-
 use Illuminate\Support\Facades\Http;
+
 use function Illuminate\Filesystem\join_paths;
 
 class UpdateDefinitionsCommand extends Command
@@ -31,12 +31,12 @@ class UpdateDefinitionsCommand extends Command
     public function handle()
     {
         $path = storage_path('app/profanity');
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             File::makeDirectory($path);
         }
-        $response = Http::get("https://api.github.com/repos/pestphp/pest-plugin-profanity/contents/src/Config/profanities");
+        $response = Http::get('https://api.github.com/repos/pestphp/pest-plugin-profanity/contents/src/Config/profanities');
         $json = $response->json();
-        $this->info("Updating profanity definitions...");
+        $this->info('Updating profanity definitions...');
         $bar = $this->output->createProgressBar(count($json));
         $bar->start();
         foreach ($json as $file) {
@@ -47,6 +47,6 @@ class UpdateDefinitionsCommand extends Command
             }
         }
         $bar->finish();
-        $this->info("Profanity definitions updated!");
+        $this->info('Profanity definitions updated!');
     }
 }

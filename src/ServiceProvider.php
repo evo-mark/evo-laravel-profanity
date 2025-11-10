@@ -2,12 +2,12 @@
 
 namespace EvoMark\EvoLaravelProfanity;
 
-use EvoMark\EvoLaravelProfanity\Commands\UpdateDefinitionsCommand;
-use EvoMark\EvoLaravelProfanity\Rules\Profanity;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Translation\PotentiallyTranslatedString;
 use Spatie\LaravelPackageTools\Package;
+use Illuminate\Support\Facades\Validator;
+use EvoMark\EvoLaravelProfanity\Rules\Profanity;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Translation\PotentiallyTranslatedString;
+use EvoMark\EvoLaravelProfanity\Commands\UpdateDefinitionsCommand;
 
 class ServiceProvider extends PackageServiceProvider
 {
