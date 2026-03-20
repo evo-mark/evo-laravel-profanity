@@ -2,6 +2,10 @@
 
 All notable changes to `evo-laravel-profanity` will be documented in this file.
 
+## v1.2.0: Laravel 13, Unlucky for Some - 2026-03-20
+
+Adds Laravel 13 support
+
 ## v1.1.1: Like s**t off a shovel - 2025-11-24
 
 - **Improvement**: Switched to using an HTTP pool request to update profanity source files
