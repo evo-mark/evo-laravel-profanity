@@ -10,6 +10,12 @@ return [
      */
     'locale' => null,
     /**
+     * Only match whole words, e.g. 'manipulate' will match 'nip' without this, but only match 'nip' with
+     * 
+     * This will become default in the next major version
+     */
+    'wholeWordMatching' => false,
+    /**
      * Include extra words as profanity, all locales should be lowercase with _ (underscores) if needed
      */
     'includingWords' => [

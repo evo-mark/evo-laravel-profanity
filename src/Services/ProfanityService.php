@@ -83,4 +83,19 @@ class ProfanityService
 
         return str($configLocale ?? App::currentLocale())->lower()->replace('-', '_');
     }
+
+    /**
+     * Check if a match is a whole word or not
+     */
+    public function isWholeWord(string $text, int $index, string $word): bool
+    {
+        $before = $index > 0 ? mb_substr($text, $index - 1, 1) : '';
+        $afterIndex = $index + mb_strlen($word);
+        $after = $afterIndex < mb_strlen($text)
+            ? mb_substr($text, $afterIndex, 1)
+            : '';
+        $isWordStart = $before === '' || !preg_match('/[\p{L}\p{N}]/u', $before);
+        $isWordEnd = $after === '' || !preg_match('/[\p{L}\p{N}]/u', $after);
+        return $isWordStart && $isWordEnd;
+    }
 }

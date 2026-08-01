@@ -11,12 +11,26 @@ class Profanity implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        $value = Str::lower($value);
+
         $service = app(ProfanityService::class);
         $matcher = $service->getMatcher();
-        $matches = $matcher->searchIn(Str::lower($value));
+        $matches = $matcher->searchIn($value);
 
         if (count($matches) > 0) {
-            $fail('validation.profanity');
+            $useWholeWordMatching = config('profanity.wholeWordMatching', false);
+
+            if (!$useWholeWordMatching) {
+                $fail('validation.profanity');
+                return;
+            }
+
+            foreach ($matches as [$index, $word]) {
+                if ($service->isWholeWord($value, $index, $word)) {
+                    $fail('validation.profanity');
+                    return;
+                }
+            }
         }
     }
 }

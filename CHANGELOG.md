@@ -2,6 +2,12 @@
 
 All notable changes to `evo-laravel-profanity` will be documented in this file.
 
+## v1.3.0: Portmanf***ingteaus - 2026-08-01
+
+- **Feature**: Add support for whole-word-matching, this will be default in version 2.
+
+  Enable this by setting `wholeWordMatching` to true in your config file
+
 ## v1.2.0: Laravel 13, Unlucky for Some - 2026-03-20
 
 Adds Laravel 13 support
